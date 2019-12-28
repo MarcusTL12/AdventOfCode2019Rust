@@ -1,6 +1,5 @@
 use std::fs::File;
 use std::io::{BufReader, BufRead};
-use std::time::Instant;
 
 
 pub fn part1() -> std::io::Result<()> {
@@ -33,8 +32,6 @@ fn modfuel(mass: i32) -> i32 {
 
 
 pub fn part2() -> std::io::Result<()> {
-    let timer = Instant::now();
-    
     let file = File::open("inputfiles/day1.txt")?;
     
     let ans: i32 = BufReader::new(file)
@@ -45,8 +42,6 @@ pub fn part2() -> std::io::Result<()> {
         )
         .map(modfuel)
         .sum();
-    
-    println!("{}", timer.elapsed().as_secs_f32());
     
     println!("Fuel: {}", ans);
     

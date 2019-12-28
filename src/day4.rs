@@ -1,5 +1,3 @@
-use std::time::Instant;
-
 extern crate digits_iterator;
 use digits_iterator::*;
 
@@ -57,11 +55,7 @@ fn isvalidpass2(pass: &i32) -> bool {
 
 
 pub fn part1() -> std::io::Result<()> {
-    let timer = Instant::now();
-    
     let c = (359282..820401).filter(isvalidpass).count();
-    
-    println!("Time: {}", timer.elapsed().as_secs_f32());
     
     println!("{}", c);
     
@@ -70,11 +64,7 @@ pub fn part1() -> std::io::Result<()> {
 
 
 pub fn part2() -> std::io::Result<()> {
-    let timer = Instant::now();
-    
     let c = (359282..820401).filter(isvalidpass2).count();
-    
-    println!("Time: {}", timer.elapsed().as_secs_f32());
     
     println!("{}", c);
     

@@ -1,7 +1,6 @@
 use std::collections::{HashSet, HashMap};
 use std::fs::File;
 use std::io::{BufReader, BufRead};
-use std::time::Instant;
 
 extern crate ndarray;
 use ndarray::{arr1, Array1};
@@ -68,8 +67,6 @@ fn allpoints_enumerated(path: &String) -> Vec<Array1<i32>> {
 
 
 pub fn part1() -> std::io::Result<()> {
-    let timer = Instant::now();
-    
     let file = File::open("inputfiles/day3/input.txt")?;
     
     let paths: Vec<_> = BufReader::new(file)
@@ -91,8 +88,6 @@ pub fn part1() -> std::io::Result<()> {
         .sum();
     //
     
-    println!("Time: {}", timer.elapsed().as_secs_f32());
-    
     println!("{}", m);
     
     Ok(())
@@ -100,8 +95,6 @@ pub fn part1() -> std::io::Result<()> {
 
 
 pub fn part2() -> std::io::Result<()> {
-    let timer = Instant::now();
-    
     let file = File::open("inputfiles/day3/input.txt")?;
     
     let paths: Vec<_> = BufReader::new(file)
@@ -138,9 +131,6 @@ pub fn part2() -> std::io::Result<()> {
         .expect("What?")
         .clone();
     //
-    
-    
-    println!("Time: {}", timer.elapsed().as_secs_f32());
     
     println!("{}", m);
     
