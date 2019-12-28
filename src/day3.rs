@@ -54,7 +54,7 @@ fn allpoints_enumerated(path: &String) -> Vec<Array1<i32>> {
     
     let mut curpos = arr1(&[0, 0]);
     
-    let mut points = Vec::<Array1<i32>>::new();
+    let mut points = Vec::new();
     
     for (d, l) in ma {
         for _ in 0..l {
@@ -72,11 +72,11 @@ pub fn part1() -> std::io::Result<()> {
     
     let file = File::open("inputfiles/day3/input.txt")?;
     
-    let paths = BufReader::new(file)
+    let paths: Vec<_> = BufReader::new(file)
         .lines()
         .map(|x| x.expect("File read error!"))
         .map(|x| allpoints(&x))
-        .collect::<Vec<HashSet<Array1<i32>>>>();
+        .collect();
     //
     
     let ap = &paths[0];
@@ -104,11 +104,11 @@ pub fn part2() -> std::io::Result<()> {
     
     let file = File::open("inputfiles/day3/input.txt")?;
     
-    let paths = BufReader::new(file)
+    let paths: Vec<_> = BufReader::new(file)
         .lines()
         .map(|x| x.expect("File read error!"))
         .map(|x| allpoints_enumerated(&x))
-        .collect::<Vec<Vec<Array1<i32>>>>();
+        .collect();
     //
     
     let ap = &paths[0];

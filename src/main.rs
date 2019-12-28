@@ -1,5 +1,6 @@
 mod day1;
 mod day3;
+mod day4;
 
 
 fn main() -> std::io::Result<()> {
@@ -26,6 +27,11 @@ fn main() -> std::io::Result<()> {
                 3 => match choice[1] {
                     1 => day3::part1()?,
                     2 => day3::part2()?,
+                    _ => println!("Not implemented")
+                },
+                4 => match choice[1] {
+                    1 => day4::part1()?,
+                    2 => day4::part2()?,
                     _ => println!("Not implemented")
                 },
                 _ => println!("Not implemented")
