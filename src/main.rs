@@ -25,7 +25,7 @@ fn main() -> std::io::Result<()> {
                 },
                 3 => match choice[1] {
                     1 => day3::part1()?,
-                    // 2 => day3::part2()?,
+                    2 => day3::part2()?,
                     _ => println!("Not implemented")
                 },
                 _ => println!("Not implemented")
