@@ -4,6 +4,7 @@ mod day1;
 mod day3;
 mod day4;
 mod day6;
+mod day8;
 
 
 fn main() -> std::io::Result<()> {
@@ -43,9 +44,14 @@ fn main() -> std::io::Result<()> {
                     2 => day6::part2()?,
                     _ => println!("Not implemented")
                 },
+                8 => match choice[1] {
+                    1 => day8::part1()?,
+                    2 => day8::part2()?,
+                    _ => println!("Not implemented")
+                },
                 _ => println!("Not implemented")
             }
-            print!("Time: {} seconds", timer.elapsed().as_secs_f32());
+            println!("Time: {} seconds", timer.elapsed().as_secs_f32());
         } else {
             println!("Only two parameters");
         }
