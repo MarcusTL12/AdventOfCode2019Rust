@@ -3,6 +3,7 @@ use std::time::Instant;
 mod day1;
 mod day10;
 mod day12;
+mod day14;
 mod day3;
 mod day4;
 mod day6;
@@ -56,6 +57,11 @@ fn main() -> std::io::Result<()> {
                 12 => match choice[1] {
                     1 => day12::part1()?,
                     2 => day12::part2()?,
+                    _ => println!("Not implemented"),
+                },
+                14 => match choice[1] {
+                    1 => day14::part1()?,
+                    2 => day14::part2()?,
                     _ => println!("Not implemented"),
                 },
                 _ => println!("Not implemented"),
