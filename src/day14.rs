@@ -94,27 +94,20 @@ fn makefuel(
 
 pub fn part1() -> std::io::Result<()> {
     let recipie = loadrecipie("inputfiles/day14/input.txt");
-    
     let ans = makefuel(&recipie, 1);
-    
     println!("Need {} ore", ans);
-    
     Ok(())
 }
 
 pub fn part2() -> std::io::Result<()> {
     let recipie = loadrecipie("inputfiles/day14/input.txt");
-    
     let availableore = 1_000_000_000_000u64;
-    
     let mut low = 1;
     let mut high = 2;
-    
     while makefuel(&recipie, high) < availableore {
         low = high;
         high <<= 2;
     }
-    
     while high - low > 1 {
         let mid = (high + low) / 2;
         let ore = makefuel(&recipie, mid);
@@ -127,8 +120,6 @@ pub fn part2() -> std::io::Result<()> {
             break;
         }
     }
-    
     println!("Can make {} fuel", low);
-    
     Ok(())
 }
