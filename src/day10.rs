@@ -14,25 +14,26 @@ fn visiblestroids(
         return HashSet::new();
     }
     
-    let mut s = HashSet::new();
-    
-    let h = board.len();
-    let w = board[0].len();
-    
-    for y in 0..h {
-        for x in 0..w {
-            if board[y][x] && (x != xp || y != yp) {
+    board.iter()
+        .enumerate()
+        .map(
+            |(i, row)| row.iter()
+                .enumerate()
+                .filter(move |(j, v)| **v && (*j != xp || i != yp))
+                .map(move |(x, _)| (x, i))
+        )
+        .flat_map(|x| x)
+        .map(
+            |(x, y)| {
                 let dx = x as i32 - xp as i32;
                 let dy = yp as i32 - y as i32;
                 
                 let g = gcd(dx, dy);
                 
-                s.insert((dx / g, dy / g));
+                (dx / g, dy / g)
             }
-        }
-    }
-    
-    s
+        )
+        .collect()
 }
 
 
@@ -79,7 +80,7 @@ pub fn part1() -> std::io::Result<()> {
     
     let vis: Vec<_> = (0..h).map(
             |y| (0..w).map(|x| amtvisiblestroids(&board, x, y))
-                .collect::<Vec<_>>()
+            .collect::<Vec<_>>()
         )
         .collect();
     //
