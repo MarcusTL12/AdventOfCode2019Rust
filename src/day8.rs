@@ -52,17 +52,16 @@ pub fn part2() -> std::io::Result<()> {
     let layers = data.len() / l;
     
     let flayer = (0..layers)
-        .map(|x| data[(l * x)..(l * (x + 1))].iter().collect::<Vec<_>>())
-        .fold(
-            (0..l).map(|_| &'2').collect::<Vec<_>>(),
-            |a, b| a.iter().zip(b.iter()).map(
-                |(x, y)| if **x != '2' {
-                    *x
-                } else {
-                    *y
-                }
-            ).collect::<Vec<_>>()
-        );
+    .map(|x| data[(l * x)..(l * (x + 1))].iter().collect::<Vec<_>>())
+    .fold(
+        (0..l).map(|_| &'2').collect::<Vec<_>>(),
+        |a, b| a.iter().zip(b.iter()).map(
+            |(x, y)| match **x {
+                '2' => *y,
+                _ => *x
+            }
+        ).collect::<Vec<_>>()
+    );
     //
     
     

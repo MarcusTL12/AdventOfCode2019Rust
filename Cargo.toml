@@ -1,5 +1,5 @@
 [package]
-name = "adventafaode2019"
+name = "adventofcode2019"
 version = "0.1.0"
 authors = ["marcus"]
 edition = "2018"
@@ -9,3 +9,4 @@ edition = "2018"
 [dependencies]
 ndarray = ""
 digits_iterator = ""
+num = ""
