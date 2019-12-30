@@ -3,7 +3,6 @@ use std::io::{BufRead, BufReader};
 
 use std::collections::HashSet;
 
-extern crate num;
 use num::integer::gcd;
 
 fn visiblestroids(
