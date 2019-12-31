@@ -7,10 +7,12 @@ mod day14;
 mod day16;
 mod day18;
 mod day20;
+mod day22;
 mod day3;
 mod day4;
 mod day6;
 mod day8;
+
 
 fn main() -> std::io::Result<()> {
     let mut done = false;
@@ -21,7 +23,12 @@ fn main() -> std::io::Result<()> {
 
         let choice: Vec<u32> = choice
             .split_whitespace()
-            .map(|x| x.parse().expect("NaNi"))
+            .map(|x| match x.parse() {
+                Ok(n) => n,
+                _ => {
+                    30
+                }
+            })
             .collect();
         if choice.len() == 2 {
             let timer = Instant::now();
@@ -80,6 +87,11 @@ fn main() -> std::io::Result<()> {
                 20 => match choice[1] {
                     1 => day20::part1()?,
                     2 => day20::part2()?,
+                    _ => println!("Not implemented"),
+                },
+                22 => match choice[1] {
+                    1 => day22::part1()?,
+                    2 => day22::part2()?,
                     _ => println!("Not implemented"),
                 },
                 _ => println!("Not implemented"),

@@ -207,7 +207,7 @@ pub fn part2() -> std::io::Result<()> {
                                 portals.get(&node)
                             {
                                 if 0 <= layer + layerdir
-                                    // && layer + layerdir <= maxdepth
+                                // && layer + layerdir <= maxdepth
                                 {
                                     let nnodel = (otherside, layer + layerdir);
                                     if !pathdict.contains_key(&nnodel) {

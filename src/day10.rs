@@ -3,7 +3,7 @@ use std::io::{BufRead, BufReader};
 
 use std::collections::HashSet;
 
-use num::integer::gcd;
+use num::Integer;
 
 fn visiblestroids(
     board: &Vec<Vec<bool>>,
@@ -28,7 +28,7 @@ fn visiblestroids(
             let dx = x as i32 - xp as i32;
             let dy = yp as i32 - y as i32;
             
-            let g = gcd(dx, dy);
+            let g = dx.gcd(&dy);
             
             (dx / g, dy / g)
         })
