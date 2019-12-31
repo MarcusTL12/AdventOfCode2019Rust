@@ -3,10 +3,17 @@ use std::time::Instant;
 mod day1;
 mod day10;
 mod day12;
+mod day14;
+mod day16;
+mod day18;
+mod day20;
+mod day22;
+mod day24;
 mod day3;
 mod day4;
 mod day6;
 mod day8;
+
 
 fn main() -> std::io::Result<()> {
     let mut done = false;
@@ -17,7 +24,12 @@ fn main() -> std::io::Result<()> {
 
         let choice: Vec<u32> = choice
             .split_whitespace()
-            .map(|x| x.parse().expect("NaNi"))
+            .map(|x| match x.parse() {
+                Ok(n) => n,
+                _ => {
+                    30
+                }
+            })
             .collect();
         if choice.len() == 2 {
             let timer = Instant::now();
@@ -56,6 +68,36 @@ fn main() -> std::io::Result<()> {
                 12 => match choice[1] {
                     1 => day12::part1()?,
                     2 => day12::part2()?,
+                    _ => println!("Not implemented"),
+                },
+                14 => match choice[1] {
+                    1 => day14::part1()?,
+                    2 => day14::part2()?,
+                    _ => println!("Not implemented"),
+                },
+                16 => match choice[1] {
+                    1 => day16::part1()?,
+                    2 => day16::part2()?,
+                    _ => println!("Not implemented"),
+                },
+                18 => match choice[1] {
+                    1 => day18::part1()?,
+                    2 => day18::part2()?,
+                    _ => println!("Not implemented"),
+                },
+                20 => match choice[1] {
+                    1 => day20::part1()?,
+                    2 => day20::part2()?,
+                    _ => println!("Not implemented"),
+                },
+                22 => match choice[1] {
+                    1 => day22::part1()?,
+                    2 => day22::part2()?,
+                    _ => println!("Not implemented"),
+                },
+                24 => match choice[1] {
+                    1 => day24::part1()?,
+                    2 => day24::part2()?,
                     _ => println!("Not implemented"),
                 },
                 _ => println!("Not implemented"),

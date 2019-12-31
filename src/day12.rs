@@ -1,10 +1,8 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-extern crate num;
 use num::integer::lcm;
 
-extern crate regex;
 use regex::Regex;
 
 fn loadinput(filename: &str) -> Vec<Vec<i32>> {
