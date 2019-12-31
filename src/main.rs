@@ -6,6 +6,7 @@ mod day12;
 mod day14;
 mod day16;
 mod day18;
+mod day2;
 mod day20;
 mod day22;
 mod day24;
@@ -14,6 +15,7 @@ mod day4;
 mod day6;
 mod day8;
 
+mod intcode;
 
 fn main() -> std::io::Result<()> {
     let mut done = false;
@@ -26,9 +28,7 @@ fn main() -> std::io::Result<()> {
             .split_whitespace()
             .map(|x| match x.parse() {
                 Ok(n) => n,
-                _ => {
-                    30
-                }
+                _ => 30,
             })
             .collect();
         if choice.len() == 2 {
@@ -38,6 +38,11 @@ fn main() -> std::io::Result<()> {
                 1 => match choice[1] {
                     1 => day1::part1()?,
                     2 => day1::part2()?,
+                    _ => println!("Not implemented"),
+                },
+                2 => match choice[1] {
+                    1 => day2::part1()?,
+                    2 => day2::part2()?,
                     _ => println!("Not implemented"),
                 },
                 3 => match choice[1] {
