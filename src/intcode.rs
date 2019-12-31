@@ -5,8 +5,8 @@ use std::io::{BufRead, BufReader};
 
 use num::pow;
 
-#[derive(Clone)]
-pub struct IntCodeMachine {
+#[derive(Clone, Debug)]
+pub struct IntcodeMachine {
     program: Vec<i64>,
     inputqueue: VecDeque<i64>,
     outputqueue: VecDeque<i64>,
@@ -14,9 +14,9 @@ pub struct IntCodeMachine {
     relbase: i64,
 }
 //
-impl IntCodeMachine {
-    pub fn new(program: &Vec<i64>) -> IntCodeMachine {
-        IntCodeMachine {
+impl IntcodeMachine {
+    pub fn new(program: &Vec<i64>) -> IntcodeMachine {
+        IntcodeMachine {
             program: program.clone(),
             inputqueue: VecDeque::new(),
             outputqueue: VecDeque::new(),
@@ -24,16 +24,16 @@ impl IntCodeMachine {
             relbase: 0,
         }
     }
-    pub fn from_string(s: String) -> IntCodeMachine {
-        IntCodeMachine::new(&s.split(',').map(|x| x.parse().unwrap()).collect())
+    pub fn from_string(s: String) -> IntcodeMachine {
+        IntcodeMachine::new(&s.split(',').map(|x| x.parse().unwrap()).collect())
     }
-    pub fn from_file(filename: &str) -> IntCodeMachine {
+    pub fn from_file(filename: &str) -> IntcodeMachine {
         let mut buffer = String::new();
         BufReader::new(File::open(filename).expect("File is fucked!"))
             .lines()
             .map(|l| l.expect("Line is fucked!"))
             .fold((), |_, s| buffer.push_str(&s));
-        IntCodeMachine::from_string(buffer)
+        IntcodeMachine::from_string(buffer)
     }
     pub fn _programiter<'a>(&'a self) -> Box<dyn Iterator<Item = &i64> + 'a> {
         Box::new(self.program.iter())
@@ -73,8 +73,8 @@ impl IntCodeMachine {
             mode => panic!("Invalid memory mode for writing: {}", mode),
         }
     }
-    pub fn sendinput<T: Iterator<Item = i64>>(&mut self, mut input: T) {
-        while let Some(x) = input.next() {
+    pub fn sendinput<'a, T: Iterator<Item = &'a i64>>(&mut self, mut input: T) {
+        while let Some(&x) = input.next() {
             self.inputqueue.push_back(x);
         }
     }
@@ -130,9 +130,11 @@ impl IntCodeMachine {
                 }
                 7 => {
                     self.setval(3, (self.getval(1) < self.getval(2)) as i64);
+                    self.pc += 4;
                 }
                 8 => {
                     self.setval(3, (self.getval(1) == self.getval(2)) as i64);
+                    self.pc += 4;
                 }
                 9 => {
                     self.relbase += self.getval(1);

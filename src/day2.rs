@@ -1,7 +1,7 @@
-use super::intcode::IntCodeMachine;
+use super::intcode::IntcodeMachine;
 
 pub fn part1() -> std::io::Result<()> {
-    let mut program = IntCodeMachine::from_file("inputfiles/day2/input.txt");
+    let mut program = IntcodeMachine::from_file("inputfiles/day2/input.txt");
     program.setmem(1, 12);
     program.setmem(2, 2);
     program.run();
@@ -10,13 +10,13 @@ pub fn part1() -> std::io::Result<()> {
 }
 
 pub fn part2() -> std::io::Result<()> {
-    fn trycomb(mut prog: IntCodeMachine, (a, b): (i64, i64)) -> i64 {
+    fn trycomb(mut prog: IntcodeMachine, (a, b): (i64, i64)) -> i64 {
         prog.setmem(1, a);
         prog.setmem(2, b);
         prog.run();
         prog.getmem(0)
     }
-    let program = IntCodeMachine::from_file("inputfiles/day2/input.txt");
+    let program = IntcodeMachine::from_file("inputfiles/day2/input.txt");
     //
     let ans = (0..100)
         .map(|i| (0..100).map(move |j| (i, j)))
