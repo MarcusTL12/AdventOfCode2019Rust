@@ -2,7 +2,7 @@ use super::intcode::IntcodeMachine;
 
 pub fn part1() -> std::io::Result<()> {
     let mut program = IntcodeMachine::from_file("inputfiles/day9.txt");
-    program.sendinput([1].iter());
+    program.input(1);
     program.run();
     let ans: Vec<_> = program.outputiter().collect();
     println!("{:?}", ans);
@@ -11,7 +11,7 @@ pub fn part1() -> std::io::Result<()> {
 
 pub fn part2() -> std::io::Result<()> {
     let mut program = IntcodeMachine::from_file("inputfiles/day9.txt");
-    program.sendinput([2].iter());
+    program.input(2);
     program.run();
     let ans: Vec<_> = program.outputiter().collect();
     println!("{:?}", ans);

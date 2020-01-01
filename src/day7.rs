@@ -6,13 +6,13 @@ fn singlepass(program: &IntcodeMachine, seq: Vec<i64>) -> i64 {
     seq.iter()
         .map(|&setting| {
             let mut p = program.clone();
-            p.sendinput([setting].iter());
+            p.input(setting);
             p
         })
         .fold(0, |signal, mut prog| {
-            prog.sendinput([signal].iter());
+            prog.input(signal);
             prog.run();
-            match prog.outputiter().next() {
+            match prog.output() {
                 Some(x) => x,
                 _ => 0,
             }
@@ -24,7 +24,7 @@ fn multipass(program: &IntcodeMachine, seq: Vec<i64>) -> i64 {
         .iter()
         .map(|&setting| {
             let mut p = program.clone();
-            p.sendinput([setting].iter());
+            p.input(setting);
             p
         })
         .collect();
@@ -35,9 +35,9 @@ fn multipass(program: &IntcodeMachine, seq: Vec<i64>) -> i64 {
             if programs[i].isdone() {
                 None
             } else {
-                programs[i].sendinput([*signal].iter());
+                programs[i].input(*signal);
                 programs[i].run();
-                if let Some(nsignal) = programs[i].outputiter().next() {
+                if let Some(nsignal) = programs[i].output() {
                     *signal = nsignal;
                     Some(nsignal)
                 } else {

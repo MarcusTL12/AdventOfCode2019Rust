@@ -91,6 +91,12 @@ impl IntcodeMachine {
                 .map(|x| x.unwrap()),
         )
     }
+    pub fn input(&mut self, v: i64) {
+        self.inputqueue.push_back(v);
+    }
+    pub fn output(&mut self) -> Option<i64> {
+        self.outputqueue.pop_front()
+    }
     pub fn run(&mut self) {
         //
         loop {
