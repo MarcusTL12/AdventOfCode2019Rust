@@ -12,6 +12,7 @@ pub struct IntcodeMachine {
     outputqueue: VecDeque<i64>,
     pc: usize,
     relbase: i64,
+    done: bool
 }
 //
 impl IntcodeMachine {
@@ -22,6 +23,7 @@ impl IntcodeMachine {
             outputqueue: VecDeque::new(),
             pc: 0,
             relbase: 0,
+            done: false,
         }
     }
     pub fn from_string(s: String) -> IntcodeMachine {
@@ -37,6 +39,9 @@ impl IntcodeMachine {
     }
     pub fn _programiter<'a>(&'a self) -> Box<dyn Iterator<Item = &i64> + 'a> {
         Box::new(self.program.iter())
+    }
+    pub fn isdone(&self) -> bool {
+        self.done
     }
     pub fn getmem(&self, i: usize) -> i64 {
         if let Some(&x) = self.program.get(i) {
@@ -86,11 +91,9 @@ impl IntcodeMachine {
                 .map(|x| x.unwrap()),
         )
     }
-    pub fn run(&mut self) -> bool {
+    pub fn run(&mut self) {
         //
-        let mut leave = false;
-        //
-        while !leave {
+        loop {
             let instruction = self.getmem(self.pc);
             //
             match instruction % 100 {
@@ -107,7 +110,7 @@ impl IntcodeMachine {
                         self.setval(1, x);
                         self.pc += 2;
                     } else {
-                        leave = true;
+                        break;
                     }
                 }
                 4 => {
@@ -140,10 +143,12 @@ impl IntcodeMachine {
                     self.relbase += self.getval(1);
                     self.pc += 2;
                 }
-                99 => break,
+                99 => {
+                    self.done = true;
+                    break;
+                },
                 _ => panic!("Trying to run invalid intcode instruction!"),
             }
         }
-        !leave
     }
 }

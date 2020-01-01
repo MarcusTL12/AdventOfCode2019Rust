@@ -20,7 +20,7 @@ pub fn part2() -> std::io::Result<()> {
     //
     let ans = (0..100)
         .map(|i| (0..100).map(move |j| (i, j)))
-        .flat_map(|x| x)
+        .flatten()
         .filter(|&x| trycomb(program.clone(), x) == 19690720)
         .map(|(a, b)| 100 * a + b)
         .fold(0, |_, a| a);

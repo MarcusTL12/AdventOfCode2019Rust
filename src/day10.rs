@@ -23,7 +23,7 @@ fn visiblestroids(
                 .filter(move |(j, v)| **v && (*j != xp || i != yp))
                 .map(move |(x, _)| (x, i))
         })
-        .flat_map(|x| x)
+        .flatten()
         .map(|(x, y)| {
             let dx = x as i32 - xp as i32;
             let dy = yp as i32 - y as i32;
