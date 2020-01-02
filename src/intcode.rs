@@ -12,7 +12,7 @@ pub struct IntcodeMachine {
     outputqueue: VecDeque<i64>,
     pc: usize,
     relbase: i64,
-    done: bool
+    done: bool,
 }
 //
 impl IntcodeMachine {
@@ -87,8 +87,7 @@ impl IntcodeMachine {
         Box::new(
             (0..)
                 .map(move |_| self.outputqueue.pop_front())
-                .take_while(|x| x.is_some())
-                .map(|x| x.unwrap()),
+                .scan((), |_, v| v),
         )
     }
     pub fn input(&mut self, v: i64) {
@@ -152,7 +151,7 @@ impl IntcodeMachine {
                 99 => {
                     self.done = true;
                     break;
-                },
+                }
                 _ => panic!("Trying to run invalid intcode instruction!"),
             }
         }
