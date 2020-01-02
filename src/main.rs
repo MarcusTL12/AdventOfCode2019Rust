@@ -8,6 +8,7 @@ mod day13;
 mod day14;
 mod day15;
 mod day16;
+mod day17;
 mod day18;
 mod day2;
 mod day20;
@@ -119,6 +120,11 @@ fn main() -> std::io::Result<()> {
                 16 => match choice[1] {
                     1 => day16::part1()?,
                     2 => day16::part2()?,
+                    _ => println!("Not implemented"),
+                },
+                17 => match choice[1] {
+                    1 => day17::part1()?,
+                    2 => day17::part2()?,
                     _ => println!("Not implemented"),
                 },
                 18 => match choice[1] {

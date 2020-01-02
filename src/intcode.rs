@@ -78,8 +78,8 @@ impl IntcodeMachine {
             mode => panic!("Invalid memory mode for writing: {}", mode),
         }
     }
-    pub fn sendinput<'a, T: Iterator<Item = &'a i64>>(&mut self, mut input: T) {
-        while let Some(&x) = input.next() {
+    pub fn sendinput<'a, T: Iterator<Item = i64>>(&mut self, mut input: T) {
+        while let Some(x) = input.next() {
             self.inputqueue.push_back(x);
         }
     }
