@@ -5,6 +5,8 @@ use std::collections::{HashMap, VecDeque};
 
 use num::Complex;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn loadmaze(filename: &str) -> Vec<Vec<char>> {
     BufReader::new(File::open(filename).expect("File if fucked!"))
         .lines()
@@ -106,7 +108,7 @@ fn makeportaldirs(
         .collect()
 }
 
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let maze = loadmaze("inputfiles/day20/input.txt");
     //
     let (portals, entrance, exit) = findportals(&maze);
@@ -168,10 +170,9 @@ pub fn part1() -> std::io::Result<()> {
     let ans = path.len() - 1;
     println!("Path length: {}", ans);
     //
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let maze = loadmaze("inputfiles/day20/input.txt");
     //
     let h = maze.len();
@@ -225,7 +226,7 @@ pub fn part2() -> std::io::Result<()> {
             }
         } else {
             println!("Did not find a path!");
-            return Ok(());
+            return;
         }
     }
     //
@@ -247,5 +248,4 @@ pub fn part2() -> std::io::Result<()> {
     let ans = path.len() - 1;
     println!("Path length: {}", ans);
     //
-    Ok(())
 }

@@ -4,6 +4,8 @@ use std::collections::{HashMap, HashSet, VecDeque};
 
 use num::Complex;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn mapmaze(
     program: &mut IntcodeMachine,
 ) -> (HashMap<Complex<i32>, bool>, usize, Option<Complex<i32>>) {
@@ -68,7 +70,7 @@ fn mapmaze(
     (maze, pathlen, target)
 }
 
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let mut program = IntcodeMachine::from_file("inputfiles/day15.txt");
     //
     let (_, pathlen, target) = mapmaze(&mut program);
@@ -79,7 +81,6 @@ pub fn part1() -> std::io::Result<()> {
         println!("Did not find path!");
     }
     //
-    Ok(())
 }
 
 fn makemaze(
@@ -125,7 +126,7 @@ fn _rendermaze(maze: &Vec<Vec<bool>>, target: Complex<i32>) {
     }
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let mut program = IntcodeMachine::from_file("inputfiles/day15.txt");
     //
     let (maze, _, target) = mapmaze(&mut program);
@@ -167,5 +168,4 @@ pub fn part2() -> std::io::Result<()> {
     //
     println!("Filled after {} minutes.", maxlen);
     //
-    Ok(())
 }

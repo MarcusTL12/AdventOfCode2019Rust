@@ -2,7 +2,9 @@ use super::intcode::IntcodeMachine;
 
 use itertools::Itertools;
 
-pub fn part1() -> std::io::Result<()> {
+pub const PARTS: [fn(); 2] = [part1, part2];
+
+fn part1() {
     let program = IntcodeMachine::from_file("inputfiles/day23.txt");
     //
     let amtmachines = 50;
@@ -46,10 +48,9 @@ pub fn part1() -> std::io::Result<()> {
     //
     println!("{}", ans);
     //
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let program = IntcodeMachine::from_file("inputfiles/day23.txt");
     //
     let amtmachines = 50;
@@ -109,5 +110,4 @@ pub fn part2() -> std::io::Result<()> {
     //
     println!("{}", ans);
     //
-    Ok(())
 }

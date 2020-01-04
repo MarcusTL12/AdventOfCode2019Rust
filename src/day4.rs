@@ -1,6 +1,8 @@
 extern crate digits_iterator;
 use digits_iterator::*;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn isvalidpass(pass: &i32) -> bool {
     let mut repeat = false;
     let mut decrease = false;
@@ -42,14 +44,12 @@ fn isvalidpass2(pass: &i32) -> bool {
     repeat && !decrease
 }
 
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let c = (359282..820401).filter(isvalidpass).count();
     println!("{}", c);
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let c = (359282..820401).filter(isvalidpass2).count();
     println!("{}", c);
-    Ok(())
 }

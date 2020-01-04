@@ -4,11 +4,13 @@ use itertools::Itertools;
 
 use std::collections::HashMap;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn resetlines(l: usize) {
     println!("\x1b[999D\x1b[{}A", l);
 }
 
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let mut program = IntcodeMachine::from_file("inputfiles/day13.txt");
     //
     program.run();
@@ -23,7 +25,6 @@ pub fn part1() -> std::io::Result<()> {
     //
     println!("{}", ans);
     //
-    Ok(())
 }
 
 fn renderboard(board: &Vec<Vec<i64>>) {
@@ -45,7 +46,7 @@ fn renderboard(board: &Vec<Vec<i64>>) {
     }
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let mut program = IntcodeMachine::from_file("inputfiles/day13.txt");
     program.setmem(0, 2);
     //
@@ -133,5 +134,4 @@ pub fn part2() -> std::io::Result<()> {
     //
     println!("Final score: {}", score);
     //
-    Ok(())
 }

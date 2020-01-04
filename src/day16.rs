@@ -3,9 +3,12 @@ use std::io::prelude::*;
 
 use std::char;
 
-pub fn part1() -> std::io::Result<()> {
+pub const PARTS: [fn(); 2] = [part1, part2];
+
+fn part1() {
     let mut inp = String::new();
-    File::open("inputfiles/day16.txt")?
+    File::open("inputfiles/day16.txt")
+        .expect("File is fucked")
         .read_to_string(&mut inp)
         .expect("File is fucked!");
     let mut signal: Vec<_> = inp
@@ -32,12 +35,12 @@ pub fn part1() -> std::io::Result<()> {
         .map(|x| char::from_digit(*x as u32, 10).unwrap())
         .collect();
     println!("{}", ans);
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let mut inp = String::new();
-    File::open("inputfiles/day16.txt")?
+    File::open("inputfiles/day16.txt")
+        .expect("File is fucked")
         .read_to_string(&mut inp)
         .expect("File is fucked!");
     //
@@ -63,5 +66,4 @@ pub fn part2() -> std::io::Result<()> {
         .map(|x| char::from_digit(*x as u32, 10).unwrap())
         .collect();
     println!("{}", ans);
-    Ok(())
 }

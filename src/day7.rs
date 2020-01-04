@@ -2,6 +2,8 @@ use permutator::Permutation;
 
 use super::intcode::IntcodeMachine;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn singlepass(program: &IntcodeMachine, seq: Vec<i64>) -> i64 {
     seq.iter()
         .map(|&setting| {
@@ -48,7 +50,7 @@ fn multipass(program: &IntcodeMachine, seq: Vec<i64>) -> i64 {
         .fold(0, |_, x| x)
 }
 
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let program = IntcodeMachine::from_file("inputfiles/day7.txt");
     let mut nums = vec![0, 1, 2, 3, 4];
     //
@@ -60,10 +62,9 @@ pub fn part1() -> std::io::Result<()> {
     //
     println!("Max signal: {}", ans);
     //
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let program = IntcodeMachine::from_file("inputfiles/day7.txt");
     let mut nums = vec![5, 6, 7, 8, 9];
     //
@@ -75,5 +76,4 @@ pub fn part2() -> std::io::Result<()> {
     //
     println!("Max signal: {:?}", ans);
     //
-    Ok(())
 }

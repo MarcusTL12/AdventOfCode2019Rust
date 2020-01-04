@@ -5,6 +5,8 @@ use std::io::{BufRead, BufReader};
 extern crate ndarray;
 use ndarray::{arr1, Array1};
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn dirmap(dir: char) -> Array1<i32> {
     match dir {
         'R' => arr1(&[1, 0]),
@@ -49,8 +51,8 @@ fn allpoints_enumerated(path: &String) -> Vec<Array1<i32>> {
     points
 }
 
-pub fn part1() -> std::io::Result<()> {
-    let file = File::open("inputfiles/day3/input.txt")?;
+fn part1() {
+    let file = File::open("inputfiles/day3/input.txt").expect("File is fucked");
     let paths: Vec<_> = BufReader::new(file)
         .lines()
         .map(|x| x.expect("File read error!"))
@@ -70,11 +72,10 @@ pub fn part1() -> std::io::Result<()> {
         .sum();
     //
     println!("{}", m);
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
-    let file = File::open("inputfiles/day3/input.txt")?;
+fn part2() {
+    let file = File::open("inputfiles/day3/input.txt").expect("File is fucked");
     let paths: Vec<_> = BufReader::new(file)
         .lines()
         .map(|x| x.expect("File read error!"))
@@ -102,5 +103,4 @@ pub fn part2() -> std::io::Result<()> {
         .clone();
     //
     println!("{}", m);
-    Ok(())
 }
