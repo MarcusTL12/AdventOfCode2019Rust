@@ -12,11 +12,27 @@ fn linpolycompose<T: Copy + Num>(a: (T, T), b: (T, T)) -> (T, T) {
     (a.0 * b.0, a.0 * b.1 + a.1)
 }
 
+fn pow<T: Copy + Integer>(a: Zn<T>, mut b: u64) -> Zn<T> {
+    let mut acc = Zn::new(T::one(), a.order());
+    let mut cur = a;
+    
+    while b != 0 {
+        let (q, r) = b.div_rem(&2);
+        b = q;
+        if r != 0 {
+            acc *= cur;
+        }
+        cur *= cur;
+    }
+    
+    acc
+}
+
 fn linpolyrepeat<T: Copy + Integer>(
     (a, b): (Zn<T>, Zn<T>),
-    n: usize,
+    n: u64,
 ) -> (Zn<T>, Zn<T>) {
-    let an = num::pow(a, n);
+    let an = pow(a, n);
     let one = Zn::new(T::one(), a.order());
     (an, b * (one - an) / (one - a))
 }
@@ -73,7 +89,7 @@ pub fn part1() -> std::io::Result<()> {
 
 pub fn part2() -> std::io::Result<()> {
     let n1 = 119315717514047 as i64;
-    let n2 = 101741582076661 as usize;
+    let n2 = 101741582076661 as u64;
     //
     let p = makepoly("inputfiles/day22/input.txt", n1);
     //
