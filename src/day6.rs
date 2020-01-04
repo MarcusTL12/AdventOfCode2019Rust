@@ -2,6 +2,8 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn traversefrom(
     orbits: &HashMap<String, String>,
     paths: &mut HashMap<&String, i32>,
@@ -34,8 +36,8 @@ fn path(orbits: &HashMap<String, String>, k: &String) -> Vec<String> {
     p
 }
 
-pub fn part1() -> std::io::Result<()> {
-    let file = File::open("inputfiles/day6/input.txt")?;
+fn part1() {
+    let file = File::open("inputfiles/day6/input.txt").expect("File is fucked");
     let orbits: HashMap<_, _> = BufReader::new(file)
         .lines()
         .map(|x| {
@@ -55,11 +57,10 @@ pub fn part1() -> std::io::Result<()> {
     let ans: i32 = paths.iter().map(|(_, v)| v).sum();
     //
     println!("{}", ans);
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
-    let file = File::open("inputfiles/day6/input.txt")?;
+fn part2() {
+    let file = File::open("inputfiles/day6/input.txt").expect("File is fucked");
     let orbits: HashMap<_, _> = BufReader::new(file)
         .lines()
         .map(|x| {
@@ -87,5 +88,4 @@ pub fn part2() -> std::io::Result<()> {
         - traversefrom(&orbits, &mut paths, &common) * 2
         - 2;
     println!("{}", ans);
-    Ok(())
 }

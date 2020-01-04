@@ -5,6 +5,8 @@ use num::integer::lcm;
 
 use regex::Regex;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn loadinput(filename: &str) -> Vec<Vec<i32>> {
     let re = Regex::new(r"<x=(-?\d+), y=(-?\d+), z=(-?\d+)>")
         .expect("Regex is broken!");
@@ -48,7 +50,7 @@ fn calcenergy(pos: &Vec<Vec<i32>>, vel: &Vec<Vec<i32>>) -> i32 {
         .sum()
 }
 
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let mut pos = loadinput("inputfiles/day12/input.txt");
     let mut vel: Vec<Vec<_>> =
         pos.iter().map(|x| x.iter().map(|_| 0).collect()).collect();
@@ -59,10 +61,9 @@ pub fn part1() -> std::io::Result<()> {
     }
     let energy = calcenergy(&pos, &vel);
     println!("Energy: {}", energy);
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let mut pos = loadinput("inputfiles/day12/input.txt");
     let mut vel: Vec<Vec<_>> =
         pos.iter().map(|x| x.iter().map(|_| 0).collect()).collect();
@@ -93,5 +94,4 @@ pub fn part2() -> std::io::Result<()> {
     }
     let totper = periods.iter().fold(1, |a, b| lcm(a, *b));
     println!("Period: {}", totper);
-    Ok(())
 }

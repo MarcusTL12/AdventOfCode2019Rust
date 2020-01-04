@@ -4,8 +4,10 @@ use regex::Regex;
 
 use std::collections::{HashMap, HashSet, VecDeque};
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 // Play the game
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let mut program = IntcodeMachine::from_file("inputfiles/day25.txt");
     //
     program.run();
@@ -23,11 +25,10 @@ pub fn part1() -> std::io::Result<()> {
         println!("{}", s);
     }
     //
-    Ok(())
 }
 
 // Autoplays the game
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let mut program = IntcodeMachine::from_file("inputfiles/day25.txt");
     //
     let reg1 = Regex::new(r"== (.+) ==").expect("Regex is broken!");
@@ -240,5 +241,4 @@ pub fn part2() -> std::io::Result<()> {
     let s: String = program.outputiter().map(|c| c as u8 as char).collect();
     println!("{}", s);
     //
-    Ok(())
 }

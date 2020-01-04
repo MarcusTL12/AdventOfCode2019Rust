@@ -5,6 +5,8 @@ use std::collections::HashSet;
 
 use num::Integer;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn visiblestroids(
     board: &Vec<Vec<bool>>,
     xp: usize,
@@ -13,7 +15,6 @@ fn visiblestroids(
     if !board[yp][xp] {
         return HashSet::new();
     }
-    
     board
         .iter()
         .enumerate()
@@ -27,9 +28,7 @@ fn visiblestroids(
         .map(|(x, y)| {
             let dx = x as i32 - xp as i32;
             let dy = yp as i32 - y as i32;
-            
             let g = dx.gcd(&dy);
-            
             (dx / g, dy / g)
         })
         .collect()
@@ -60,8 +59,9 @@ fn getasteroid(
     (x as usize, y as usize)
 }
 
-pub fn part1() -> std::io::Result<()> {
-    let file = File::open("inputfiles/day10/input.txt")?;
+fn part1() {
+    let file =
+        File::open("inputfiles/day10/input.txt").expect("File is fucked");
     let board: Vec<Vec<_>> = BufReader::new(file)
         .lines()
         .map(|x| x.expect("Line is fucked!"))
@@ -70,16 +70,10 @@ pub fn part1() -> std::io::Result<()> {
     //
     let h = board.len();
     let w = board[0].len();
-    
     let vis: Vec<Vec<_>> = (0..h)
-        .map(|y| {
-            (0..w)
-                .map(|x| amtvisiblestroids(&board, x, y))
-                .collect()
-        })
+        .map(|y| (0..w).map(|x| amtvisiblestroids(&board, x, y)).collect())
         .collect();
     //
-    
     let v = vis
         .iter()
         .map(|row| row.iter().max_by(|a, b| a.cmp(b)).unwrap())
@@ -87,11 +81,11 @@ pub fn part1() -> std::io::Result<()> {
         .unwrap();
     //
     println!("{}", v);
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
-    let file = File::open("inputfiles/day10/input.txt")?;
+fn part2() {
+    let file =
+        File::open("inputfiles/day10/input.txt").expect("File is fucked");
     let board: Vec<Vec<_>> = BufReader::new(file)
         .lines()
         .map(|x| x.expect("Line is fucked!"))
@@ -100,16 +94,10 @@ pub fn part2() -> std::io::Result<()> {
     //
     let h = board.len();
     let w = board[0].len();
-    
     let vis: Vec<Vec<_>> = (0..h)
-        .map(|y| {
-            (0..w)
-                .map(|x| amtvisiblestroids(&board, x, y))
-                .collect()
-        })
+        .map(|y| (0..w).map(|x| amtvisiblestroids(&board, x, y)).collect())
         .collect();
     //
-    
     let (y, (x, _)) = vis
         .iter()
         .map(|row| {
@@ -128,5 +116,4 @@ pub fn part2() -> std::io::Result<()> {
     dirs.sort_by(|p1, p2| getangle(**p1).partial_cmp(&getangle(**p2)).unwrap());
     let (assx, assy) = getasteroid(&board, x as i32, y as i32, *dirs[199]);
     println!("{}", assx * 100 + assy);
-    Ok(())
 }

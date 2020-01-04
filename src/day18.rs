@@ -5,6 +5,8 @@ use std::collections::{HashMap, VecDeque};
 
 use num::Complex;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn loadmaze(filename: &str) -> Vec<Vec<char>> {
     BufReader::new(File::open(filename).expect("File if fucked!"))
         .lines()
@@ -154,7 +156,7 @@ fn solve2(mazepos: &(Vec<Vec<char>>, Vec<Complex<i32>>)) -> usize {
     rec(&mut mem, mazepos)
 }
 
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let maze = loadmaze("inputfiles/day18/input.txt");
     let pos: Complex<i32> = if let Some((im, Some((re, _)))) = maze
         .iter()
@@ -168,10 +170,9 @@ pub fn part1() -> std::io::Result<()> {
     };
     let ans = solve(&(maze, pos));
     println!("{}", ans);
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let maze = loadmaze("inputfiles/day18/inputpart2.txt");
     let mut pos = Vec::new();
     for i in 0..maze.len() {
@@ -183,5 +184,4 @@ pub fn part2() -> std::io::Result<()> {
     }
     let ans = solve2(&(maze, pos));
     println!("{}", ans);
-    Ok(())
 }

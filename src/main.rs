@@ -1,5 +1,3 @@
-use std::time::Instant;
-
 mod day1;
 mod day10;
 mod day11;
@@ -28,155 +26,64 @@ mod day9;
 
 mod intcode;
 
-fn main() -> std::io::Result<()> {
-    let mut done = false;
-    while !done {
-        println!("Enter day, part:");
-        let mut choice = String::new();
-        std::io::stdin().read_line(&mut choice).expect("Dafuq");
-
-        let choice: Vec<u32> = choice
-            .split_whitespace()
-            .map(|x| match x.parse() {
-                Ok(n) => n,
-                _ => 30,
-            })
-            .collect();
-        if choice.len() == 2 {
-            let timer = Instant::now();
-            match choice[0] {
-                0 => done = true,
-                1 => match choice[1] {
-                    1 => day1::part1()?,
-                    2 => day1::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                2 => match choice[1] {
-                    1 => day2::part1()?,
-                    2 => day2::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                3 => match choice[1] {
-                    1 => day3::part1()?,
-                    2 => day3::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                4 => match choice[1] {
-                    1 => day4::part1()?,
-                    2 => day4::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                5 => match choice[1] {
-                    1 => day5::part1()?,
-                    2 => day5::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                6 => match choice[1] {
-                    1 => day6::part1()?,
-                    2 => day6::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                7 => match choice[1] {
-                    1 => day7::part1()?,
-                    2 => day7::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                8 => match choice[1] {
-                    1 => day8::part1()?,
-                    2 => day8::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                9 => match choice[1] {
-                    1 => day9::part1()?,
-                    2 => day9::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                10 => match choice[1] {
-                    1 => day10::part1()?,
-                    2 => day10::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                11 => match choice[1] {
-                    1 => day11::part1()?,
-                    2 => day11::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                12 => match choice[1] {
-                    1 => day12::part1()?,
-                    2 => day12::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                13 => match choice[1] {
-                    1 => day13::part1()?,
-                    2 => day13::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                14 => match choice[1] {
-                    1 => day14::part1()?,
-                    2 => day14::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                15 => match choice[1] {
-                    1 => day15::part1()?,
-                    2 => day15::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                16 => match choice[1] {
-                    1 => day16::part1()?,
-                    2 => day16::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                17 => match choice[1] {
-                    1 => day17::part1()?,
-                    2 => day17::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                18 => match choice[1] {
-                    1 => day18::part1()?,
-                    2 => day18::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                19 => match choice[1] {
-                    1 => day19::part1()?,
-                    2 => day19::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                20 => match choice[1] {
-                    1 => day20::part1()?,
-                    2 => day20::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                21 => match choice[1] {
-                    1 => day21::part1()?,
-                    2 => day21::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                22 => match choice[1] {
-                    1 => day22::part1()?,
-                    2 => day22::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                23 => match choice[1] {
-                    1 => day23::part1()?,
-                    2 => day23::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                24 => match choice[1] {
-                    1 => day24::part1()?,
-                    2 => day24::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                25 => match choice[1] {
-                    1 => day25::part1()?,
-                    2 => day25::part2()?,
-                    _ => println!("Not implemented"),
-                },
-                _ => println!("Not implemented"),
+fn main() {
+    let funcs = [
+        day1::PARTS,
+        day2::PARTS,
+        day3::PARTS,
+        day4::PARTS,
+        day5::PARTS,
+        day6::PARTS,
+        day7::PARTS,
+        day8::PARTS,
+        day9::PARTS,
+        day10::PARTS,
+        day11::PARTS,
+        day12::PARTS,
+        day13::PARTS,
+        day14::PARTS,
+        day15::PARTS,
+        day16::PARTS,
+        day17::PARTS,
+        day18::PARTS,
+        day19::PARTS,
+        day20::PARTS,
+        day21::PARTS,
+        day22::PARTS,
+        day23::PARTS,
+        day24::PARTS,
+        day25::PARTS,
+    ];
+    let mut args = std::env::args();
+    args.next();
+    if let Some(x) = args.next() {
+        if let Ok(x) = x.parse::<usize>() {
+            if let Some(y) = args.next() {
+                if let Ok(y) = y.parse::<usize>() {
+                    if let Some(x) = funcs.get(x - 1) {
+                        if let Some(x) = x.get(y - 1) {
+                            let timer = std::time::Instant::now();
+                            x();
+                            println!(
+                                "Took {} seconds",
+                                timer.elapsed().as_secs_f32()
+                            );
+                        } else {
+                            println!("Not implemented");
+                        }
+                    } else {
+                        println!("Not implemented");
+                    }
+                } else {
+                    println!("Must enter numbers!");
+                }
+            } else {
+                println!("Pass day and part as commandline parameters");
             }
-            println!("Time: {} seconds", timer.elapsed().as_secs_f32());
         } else {
-            println!("Only two parameters");
+            println!("Must enter numbers!");
         }
+    } else {
+        println!("Pass day and part as commandline parameters");
     }
-    Ok(())
 }

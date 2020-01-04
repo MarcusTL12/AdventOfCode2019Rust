@@ -1,5 +1,7 @@
 use super::intcode::IntcodeMachine;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn pulled(program: &IntcodeMachine, x: usize, y: usize) -> bool {
     let mut nprog = program.clone();
     nprog.input(x as i64);
@@ -11,7 +13,7 @@ fn pulled(program: &IntcodeMachine, x: usize, y: usize) -> bool {
     }
 }
 
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let program = IntcodeMachine::from_file("inputfiles/day19.txt");
     //
     let ans: usize = (0..50)
@@ -20,7 +22,6 @@ pub fn part1() -> std::io::Result<()> {
     //
     println!("Area: {}", ans);
     //
-    Ok(())
 }
 
 fn widestat(program: &IntcodeMachine, n: usize) -> (usize, usize) {
@@ -36,7 +37,7 @@ fn widestat(program: &IntcodeMachine, n: usize) -> (usize, usize) {
     (i, x)
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let program = IntcodeMachine::from_file("inputfiles/day19.txt");
     //
     let mut low = 8;
@@ -59,5 +60,4 @@ pub fn part2() -> std::io::Result<()> {
     let x = widestat(&program, low).1;
     println!("{}", x * 10_000 + low - 99);
     //
-    Ok(())
 }

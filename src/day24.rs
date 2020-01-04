@@ -3,6 +3,8 @@ use std::io::{BufRead, BufReader};
 
 use std::collections::HashSet;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn loadboard(filename: &str) -> Vec<Vec<bool>> {
     BufReader::new(File::open(filename).expect("File is fucked!"))
         .lines()
@@ -23,7 +25,7 @@ fn _renderboard(board: &Vec<Vec<bool>>) {
     println!("-----");
 }
 
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let mut board = loadboard("inputfiles/day24/input.txt");
     //
     let h = board.len();
@@ -86,10 +88,9 @@ pub fn part1() -> std::io::Result<()> {
     //
     println!("Biodiversity: {}", biod);
     //
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let board_mid = loadboard("inputfiles/day24/input.txt");
     let h = board_mid.len();
     let w = board_mid[0].len();
@@ -200,12 +201,16 @@ pub fn part2() -> std::io::Result<()> {
         board = temp;
     }
     //
-    let ans: usize = board.iter().map(|layer| -> usize {
-        layer.iter().map(|row| row.iter().filter(|&&x| x).count()).sum()
-    })
-    .sum();
+    let ans: usize = board
+        .iter()
+        .map(|layer| -> usize {
+            layer
+                .iter()
+                .map(|row| row.iter().filter(|&&x| x).count())
+                .sum()
+        })
+        .sum();
     //
     println!("Bugs: {}", ans);
     //
-    Ok(())
 }

@@ -1,6 +1,8 @@
 use super::intcode::IntcodeMachine;
 
-pub fn part1() -> std::io::Result<()> {
+pub const PARTS: [fn(); 2] = [part1, part2];
+
+fn part1() {
     let mut program = IntcodeMachine::from_file("inputfiles/day21.txt");
     //
     let ins = "NOT T T
@@ -25,10 +27,9 @@ WALK
     println!("{}", s);
     println!("{}", ans);
     //
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let mut program = IntcodeMachine::from_file("inputfiles/day21.txt");
     //
     let ins = "NOT T T
@@ -58,5 +59,4 @@ RUN
     println!("{}", s);
     println!("{}", ans);
     //
-    Ok(())
 }

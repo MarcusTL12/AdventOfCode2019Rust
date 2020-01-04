@@ -5,6 +5,8 @@ use std::collections::HashMap;
 
 use num::Integer;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn loadrecipie(filename: &str) -> HashMap<String, (u64, Vec<(u64, String)>)> {
     BufReader::new(File::open(filename).expect("File is Fucked!"))
         .lines()
@@ -92,14 +94,13 @@ fn makefuel(
     curprod[&&orestring]
 }
 
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let recipie = loadrecipie("inputfiles/day14/input.txt");
     let ans = makefuel(&recipie, 1);
     println!("Need {} ore", ans);
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let recipie = loadrecipie("inputfiles/day14/input.txt");
     let availableore = 1_000_000_000_000u64;
     let mut low = 1;
@@ -121,5 +122,4 @@ pub fn part2() -> std::io::Result<()> {
         }
     }
     println!("Can make {} fuel", low);
-    Ok(())
 }

@@ -1,9 +1,12 @@
 use std::fs::File;
 use std::io::prelude::*;
 
-pub fn part1() -> std::io::Result<()> {
+pub const PARTS: [fn(); 2] = [part1, part2];
+
+fn part1() {
     let mut s = String::new();
-    File::open("inputfiles/day8/input.txt")?
+    File::open("inputfiles/day8/input.txt")
+        .expect("File is fucked")
         .read_to_string(&mut s)
         .expect("Error reading file!");
     //
@@ -27,12 +30,12 @@ pub fn part1() -> std::io::Result<()> {
         * minlayer.iter().filter(|y| **y == '2').count();
     //
     println!("{}", ans);
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let mut s = String::new();
-    File::open("inputfiles/day8/input.txt")?
+    File::open("inputfiles/day8/input.txt")
+        .expect("File is fucked")
         .read_to_string(&mut s)
         .expect("Error reading file!");
     //
@@ -66,5 +69,4 @@ pub fn part2() -> std::io::Result<()> {
         }
         println!("");
     }
-    Ok(())
 }

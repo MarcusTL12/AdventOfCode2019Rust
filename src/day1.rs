@@ -1,14 +1,17 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-pub fn part1() -> std::io::Result<()> {
-    let ans: u32 = BufReader::new(File::open("inputfiles/day1.txt")?)
-        .lines()
-        .map(|x| x.expect("Line is fucked").parse().expect("NaNi"))
-        .map(|x: u32| x / 3 - 2)
-        .sum();
+pub const PARTS: [fn(); 2] = [part1, part2];
+
+fn part1() {
+    let ans: u32 = BufReader::new(
+        File::open("inputfiles/day1.txt").expect("File is fucked"),
+    )
+    .lines()
+    .map(|x| x.expect("Line is fucked").parse().expect("NaNi"))
+    .map(|x: u32| x / 3 - 2)
+    .sum();
     println!("Fuel: {}", ans);
-    Ok(())
 }
 
 fn modfuel(mass: i32) -> i32 {
@@ -20,12 +23,13 @@ fn modfuel(mass: i32) -> i32 {
     }
 }
 
-pub fn part2() -> std::io::Result<()> {
-    let ans: i32 = BufReader::new(File::open("inputfiles/day1.txt")?)
-        .lines()
-        .map(|x| x.expect("Line is fucked").parse().expect("NaNi"))
-        .map(modfuel)
-        .sum();
+fn part2() {
+    let ans: i32 = BufReader::new(
+        File::open("inputfiles/day1.txt").expect("File is fucked"),
+    )
+    .lines()
+    .map(|x| x.expect("Line is fucked").parse().expect("NaNi"))
+    .map(modfuel)
+    .sum();
     println!("Fuel: {}", ans);
-    Ok(())
 }

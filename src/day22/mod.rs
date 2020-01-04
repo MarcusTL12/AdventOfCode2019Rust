@@ -8,6 +8,8 @@ use regex::Regex;
 mod zn;
 use zn::Zn;
 
+pub const PARTS: [fn(); 2] = [part1, part2];
+
 fn linpolycompose<T: Copy + Num>(a: (T, T), b: (T, T)) -> (T, T) {
     (a.0 * b.0, a.0 * b.1 + a.1)
 }
@@ -76,7 +78,7 @@ fn makepoly<T: Integer + Copy + std::str::FromStr>(
         .fold((one, zero), linpolycompose)
 }
 
-pub fn part1() -> std::io::Result<()> {
+fn part1() {
     let n = 10007;
     let p = makepoly("inputfiles/day22/input.txt", n);
 
@@ -84,10 +86,9 @@ pub fn part1() -> std::io::Result<()> {
         .find(|&x| p.0 * x + p.1 == Zn::new(2019, n))
         .unwrap();
     println!("{}", ans);
-    Ok(())
 }
 
-pub fn part2() -> std::io::Result<()> {
+fn part2() {
     let n1 = 119315717514047 as i64;
     let n2 = 101741582076661 as u64;
     //
@@ -99,5 +100,4 @@ pub fn part2() -> std::io::Result<()> {
     //
     println!("{:?}", ans);
     //
-    Ok(())
 }
