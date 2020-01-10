@@ -96,9 +96,7 @@ impl<T: num::Integer, const N: u64> ops::Mul<T> for Zn<N> {
             -acc
         } else {
             acc
-        };
-        
-        self
+        }
     }
 }
 
@@ -118,8 +116,8 @@ impl<const N: u64> ops::MulAssign<Zn<N>> for Zn<N> {
 impl<const N: u64> ops::Div<Zn<N>> for Zn<N> {
     type Output = Zn<N>;
     fn div(self, rhs: Self) -> Self {
-        let inv = match modinverse(rhs.i, N) {
-            Some(x) => x,
+        let inv = match modinverse(rhs.i as i64, N as i64) {
+            Some(x) => x as u64,
             None => panic!("Division by noninvertible element"),
         };
         self * Self::new(inv)

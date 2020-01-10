@@ -42,44 +42,6 @@ fn linpolyrepeat<const N: u64>(
 fn makepoly<const N: u64>(
     filename: &str
 ) -> (Zn<N>, Zn<N>) {
-    let one = Zn::new(1);
-    let zero = Zn::new(0);
-    //
-    let p1 = (-one, -one);
-    let p2 = |m: i64| (one, one * m);
-    let p3 = |m: i64| (one / (one * m), zero);
-    //
-    let reg0 = String::from("deal into new stack");
-    let reg1 = Regex::new(r"cut (-?\d+)").expect("Regex 1 is broken!");
-    let reg2 =
-        Regex::new(r"deal with increment (\d+)").expect("Regex 2 is broken!");
-    //
-    BufReader::new(File::open(filename).expect("File is fucked!"))
-        .lines()
-        .map(|l| l.expect("Line is fucked"))
-        .map(|l| {
-            if l == reg0 {
-                p1
-            } else if let Some(c) = reg1.captures(&l) {
-                match c[1].parse() {
-                    Ok(m) => p2(m),
-                    _ => panic!("NaNi?\n{:?}", l),
-                }
-            } else if let Some(c) = reg2.captures(&l) {
-                match c[1].parse() {
-                    Ok(m) => p3(m),
-                    _ => panic!("NaNi?\n{:?}", l),
-                }
-            } else {
-                panic!("Unexpected line: \n {}", l);
-            }
-        })
-        .fold((one, zero), linpolycompose)
-}
-
-fn _makepoly<const N: u64>(
-    filename: &str
-) -> (Zn<N>, Zn<N>) {
     let one = Zn::one();
     let zero = Zn::zero();
     //
@@ -96,24 +58,18 @@ fn _makepoly<const N: u64>(
         .lines()
         .map(|l| l.expect("Line is fucked"))
         .map(|l| {
-            println!("{}", l);
             if l == reg0 {
-                println!("{:?}", p1);
                 p1
             } else if let Some(c) = reg1.captures(&l) {
-                let temp = match c[1].parse() {
+                match c[1].parse() {
                     Ok(m) => p2(m),
                     _ => panic!("NaNi?\n{:?}", l),
-                };
-                println!("{:?}", temp);
-                temp
+                }
             } else if let Some(c) = reg2.captures(&l) {
-                let temp = match c[1].parse() {
+                match c[1].parse() {
                     Ok(m) => p3(m),
                     _ => panic!("NaNi?\n{:?}", l),
-                };
-                println!("{:?}", temp);
-                temp
+                }
             } else {
                 panic!("Unexpected line: \n {}", l);
             }
@@ -122,17 +78,15 @@ fn _makepoly<const N: u64>(
 }
 
 fn part1() {
-    const N: u64 = 10;
-    let p = _makepoly::<N>("inputfiles/day22/example.txt");
+    const N: u64 = 10007;
+    let p = makepoly::<N>("inputfiles/day22/input.txt");
     
-    // let tofind: Zn<N> = Zn::new(2019);
+    let tofind: Zn<N> = Zn::new(2019);
     
-    // let ans = p.0 * 4284 + p.1;
-    
-    // let ans = (1..N + 1)
-    //     .find(|&x| p.0 * x + p.1 == tofind);
-        // .unwrap();
-    println!("{:?}", p);
+    let ans = (1..N + 1)
+        .find(|&x| p.0 * x + p.1 == tofind)
+        .unwrap();
+    println!("{:?}", ans);
 }
 
 fn part2() {
