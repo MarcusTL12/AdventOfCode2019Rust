@@ -2,31 +2,30 @@ use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-extern crate ndarray;
-use ndarray::{arr1, Array1};
+use num::Complex;
 
 pub const PARTS: [fn(); 2] = [part1, part2];
 
-fn dirmap(dir: char) -> Array1<i32> {
+fn dirmap(dir: char) -> Complex<i32> {
     match dir {
-        'R' => arr1(&[1, 0]),
-        'L' => arr1(&[-1, 0]),
-        'U' => arr1(&[0, 1]),
-        'D' => arr1(&[0, -1]),
-        _ => arr1(&[0, 0]),
+        'R' => Complex::new(1, 0),
+        'L' => Complex::new(-1, 0),
+        'U' => Complex::new(0, 1),
+        'D' => Complex::new(0, -1),
+        _ => Complex::new(0, 0),
     }
 }
 
-fn parsemove(m: &str) -> (Array1<i32>, i32) {
+fn parsemove(m: &str) -> (Complex<i32>, i32) {
     let dir = dirmap(m.chars().next().expect("String is fucked!"));
     let dist: i32 = m[1..].parse().expect("Invalid move");
     (dir, dist)
 }
 
-fn allpoints(path: &String) -> HashSet<Array1<i32>> {
+fn allpoints(path: &String) -> HashSet<Complex<i32>> {
     let ma = path.split(",").map(|x| parsemove(&x));
     //
-    let mut curpos = arr1(&[0, 0]);
+    let mut curpos = Complex::new(0, 0);
     let mut points = HashSet::new();
     for (d, l) in ma {
         for _ in 0..l {
@@ -37,10 +36,10 @@ fn allpoints(path: &String) -> HashSet<Array1<i32>> {
     points
 }
 
-fn allpoints_enumerated(path: &String) -> Vec<Array1<i32>> {
+fn allpoints_enumerated(path: &String) -> Vec<Complex<i32>> {
     let ma = path.split(",").map(|x| parsemove(&x));
     //
-    let mut curpos = arr1(&[0, 0]);
+    let mut curpos = Complex::new(0, 0);
     let mut points = Vec::new();
     for (d, l) in ma {
         for _ in 0..l {
@@ -65,13 +64,11 @@ fn part1() {
     let m = ap
         .intersection(&bp)
         .min_by(|a, b| {
-            (a[0].abs() + a[1].abs()).cmp(&(b[0].abs() + b[1].abs()))
+            (a.re.abs() + a.im.abs()).cmp(&(b.re.abs() + b.im.abs()))
         })
-        .expect("What?")
-        .map(|x| x.abs())
-        .sum();
+        .expect("What?");
     //
-    println!("{}", m);
+    println!("{}", m.re.abs() + m.im.abs());
 }
 
 fn part2() {
