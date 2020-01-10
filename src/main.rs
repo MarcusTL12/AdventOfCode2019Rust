@@ -1,3 +1,6 @@
+#![allow(incomplete_features)]
+#![feature(const_generics)]
+
 mod day1;
 mod day10;
 mod day11;
