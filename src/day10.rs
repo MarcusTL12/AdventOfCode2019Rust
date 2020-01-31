@@ -111,9 +111,9 @@ fn part2() {
         .unwrap();
     //
     let dirs = visiblestroids(&board, x, y);
-    let mut dirs = dirs.iter().collect::<Vec<_>>();
+    let mut dirs = dirs.into_iter().collect::<Vec<_>>();
     //
-    dirs.sort_by(|p1, p2| getangle(**p1).partial_cmp(&getangle(**p2)).unwrap());
-    let (assx, assy) = getasteroid(&board, x as i32, y as i32, *dirs[199]);
+    dirs.sort_by(|&p1, &p2| getangle(p1).partial_cmp(&getangle(p2)).unwrap());
+    let (assx, assy) = getasteroid(&board, x as i32, y as i32, dirs[199]);
     println!("{}", assx * 100 + assy);
 }
