@@ -64,7 +64,7 @@ fn main() {
                         if let Some(x) = x.get(y - 1) {
                             let timer = std::time::Instant::now();
                             x();
-                            println!("Took {:?} seconds", timer.elapsed());
+                            println!("Took {:?}", timer.elapsed());
                         } else {
                             println!("Not implemented");
                         }
