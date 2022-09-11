@@ -7,9 +7,9 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-digits_iterator = ""
-num = ""
-regex = ""
-modinverse = ""
-permutator = ""
-itertools = ""
+digits_iterator = "0.1"
+num = "0.4"
+regex = "1.6"
+modinverse = "0.1"
+permutator = "0.4"
+itertools = "0.10"

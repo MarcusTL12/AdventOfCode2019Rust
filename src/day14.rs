@@ -3,7 +3,7 @@ use std::io::{BufRead, BufReader};
 
 use std::collections::HashMap;
 
-use num::Integer;
+// use num::Integer;
 
 pub const PARTS: [fn(); 2] = [part1, part2];
 
@@ -57,7 +57,7 @@ fn makefuel(
             }
         } else {
             let currecipie = &recipie[chemical];
-            let amtrecipies = amt.div_ceil(&currecipie.0);
+            let amtrecipies = amt.div_ceil(currecipie.0);
             if let Some(x) = cursurplus.get_mut(chemical) {
                 *x += amtrecipies * currecipie.0 - amt;
             }
