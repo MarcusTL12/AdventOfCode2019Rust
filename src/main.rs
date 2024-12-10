@@ -2,7 +2,7 @@ use std::{env, fmt::Display, fs::read_to_string, time::Instant};
 
 use home::home_dir;
 
-// mod day1;
+mod day1;
 
 enum TaskResult {
     Number(i64),
@@ -39,14 +39,12 @@ where
 
 type Day = [fn(String) -> TaskResult; 2];
 
-const DAYS: &[Day] = &[
-    // day1::PARTS,
-];
+const DAYS: &[Day] = &[day1::PARTS];
 
 fn load_input(day: usize, example: usize) -> String {
     let path = home_dir()
         .unwrap()
-        .join("aoc-input/2024")
+        .join("aoc-input/2019")
         .join(format!("day{day}"))
         .join(if example == 0 {
             "input".to_string()
