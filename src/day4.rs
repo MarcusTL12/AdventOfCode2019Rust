@@ -1,3 +1,5 @@
+use rayon::iter::{IntoParallelIterator, ParallelIterator};
+
 use crate::{Day, TaskResult};
 
 pub const PARTS: Day = [part1, part2];
@@ -30,10 +32,11 @@ fn check_cond<I: Iterator<Item = u8>>(it: I) -> bool {
 fn part1(input: String) -> TaskResult {
     let (a, b) = input.trim_ascii_end().split_once('-').unwrap();
 
-    let a = a.parse().unwrap();
-    let b = b.parse().unwrap();
+    let a: u32 = a.parse().unwrap();
+    let b: u32 = b.parse().unwrap();
 
     (a..=b)
+        .into_par_iter()
         .filter(|&n| check_cond(digit_iter(n)))
         .count()
         .into()
