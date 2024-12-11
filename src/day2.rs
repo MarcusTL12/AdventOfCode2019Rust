@@ -1,4 +1,4 @@
-use crate::{Day, TaskResult};
+use crate::{intcode::parse_intcode_program, Day, TaskResult};
 
 pub const PARTS: Day = [part1, part2];
 
@@ -22,11 +22,7 @@ fn run(program: &mut [i64]) {
 }
 
 fn part1(input: String) -> TaskResult {
-    let mut program: Vec<i64> = input
-        .trim_ascii_end()
-        .split(',')
-        .map(|x| x.parse().unwrap())
-        .collect();
+    let mut program = parse_intcode_program(&input);
 
     program[1] = 12;
 
@@ -36,11 +32,7 @@ fn part1(input: String) -> TaskResult {
 }
 
 fn part2(input: String) -> TaskResult {
-    let orig_program: Vec<i64> = input
-        .trim_ascii_end()
-        .split(',')
-        .map(|x| x.parse().unwrap())
-        .collect();
+    let orig_program = parse_intcode_program(&input);
 
     let mut program = orig_program.clone();
 

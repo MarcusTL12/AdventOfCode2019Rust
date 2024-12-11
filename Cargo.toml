@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 home = "0.5"
 rayon = "1"
+crossbeam = "0.8"
