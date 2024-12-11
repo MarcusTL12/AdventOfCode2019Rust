@@ -35,6 +35,10 @@ enum Instruction {
     Mul(Parameter, Parameter, Parameter),
     Input(Parameter),
     Output(Parameter),
+    JumpTrue(Parameter, Parameter),
+    JumpFalse(Parameter, Parameter),
+    IsLess(Parameter, Parameter, Parameter),
+    IsEq(Parameter, Parameter, Parameter),
     Halt,
 }
 
@@ -90,6 +94,24 @@ impl IntcodeMachine {
             ),
             3 => Instruction::Input(Parameter::new(flag1, self[self.pc + 1])),
             4 => Instruction::Output(Parameter::new(flag1, self[self.pc + 1])),
+            5 => Instruction::JumpTrue(
+                Parameter::new(flag1, self[self.pc + 1]),
+                Parameter::new(flag2, self[self.pc + 2]),
+            ),
+            6 => Instruction::JumpFalse(
+                Parameter::new(flag1, self[self.pc + 1]),
+                Parameter::new(flag2, self[self.pc + 2]),
+            ),
+            7 => Instruction::IsLess(
+                Parameter::new(flag1, self[self.pc + 1]),
+                Parameter::new(flag2, self[self.pc + 2]),
+                Parameter::new(flag3, self[self.pc + 3]),
+            ),
+            8 => Instruction::IsEq(
+                Parameter::new(flag1, self[self.pc + 1]),
+                Parameter::new(flag2, self[self.pc + 2]),
+                Parameter::new(flag3, self[self.pc + 3]),
+            ),
             _ => panic!("Illegal opcode: {opcode}"),
         }
     }
@@ -130,6 +152,28 @@ impl IntcodeMachine {
                     self.pc += 2;
                 }
                 Instruction::Halt => return Ok(()),
+                Instruction::JumpTrue(a, b) => {
+                    if self.get(a) != 0 {
+                        self.pc = self.get(b) as usize;
+                    } else {
+                        self.pc += 3;
+                    }
+                }
+                Instruction::JumpFalse(a, b) => {
+                    if self.get(a) == 0 {
+                        self.pc = self.get(b) as usize;
+                    } else {
+                        self.pc += 3;
+                    }
+                }
+                Instruction::IsLess(a, b, c) => {
+                    self.set(c, if self.get(a) < self.get(b) { 1 } else { 0 });
+                    self.pc += 4;
+                }
+                Instruction::IsEq(a, b, c) => {
+                    self.set(c, if self.get(a) == self.get(b) { 1 } else { 0 });
+                    self.pc += 4;
+                }
             }
         }
     }
