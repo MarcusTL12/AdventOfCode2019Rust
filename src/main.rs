@@ -6,12 +6,15 @@ use home::home_dir;
 
 mod intcode;
 
+mod permiter;
+
 mod day1;
 mod day2;
 mod day3;
 mod day4;
 mod day5;
 mod day6;
+mod day7;
 
 enum TaskResult {
     Number(i64),
@@ -55,6 +58,7 @@ const DAYS: &[Day] = &[
     day4::PARTS,
     day5::PARTS,
     day6::PARTS,
+    day7::PARTS,
 ];
 
 fn load_input(day: usize, example: usize) -> String {
