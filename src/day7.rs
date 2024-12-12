@@ -16,18 +16,14 @@ fn part1(input: String) -> TaskResult {
 
     let mut max_val = 0;
 
-    for settings in permutations::<5>() {
-        let channels = (0..6)
-            .map(|_| channel::unbounded())
-            .collect::<ArrayVec<_, 6>>()
-            .into_inner()
-            .unwrap();
+    let channels = (0..6)
+        .map(|_| channel::unbounded())
+        .collect::<ArrayVec<_, 6>>()
+        .into_inner()
+        .unwrap();
 
-        for (&x, (s, _)) in settings.iter().zip(&channels) {
-            s.send(x as i64).unwrap();
-        }
-
-        let machines = (0..5)
+    let mut machines = Some(
+        (0..5)
             .map(|i| {
                 IntcodeMachine::new(
                     program.clone(),
@@ -37,13 +33,28 @@ fn part1(input: String) -> TaskResult {
             })
             .collect::<ArrayVec<_, 5>>()
             .into_inner()
-            .unwrap();
+            .unwrap(),
+    );
 
-        for mut m in machines {
-            thread::spawn(move || m.run().unwrap());
+    for settings in permutations::<5>() {
+        for m in machines.as_mut().unwrap() {
+            m.load_progam(&program);
         }
 
+        for (&x, (s, _)) in settings.iter().zip(&channels) {
+            s.send(x as i64).unwrap();
+        }
+
+        let handles = machines.take().unwrap().map(|mut m| {
+            thread::spawn(|| {
+                m.run().unwrap();
+                m
+            })
+        });
+
         channels[0].0.send(0).unwrap();
+
+        machines = Some(handles.map(|handle| handle.join().unwrap()));
 
         max_val = channels[5].1.recv().unwrap().max(max_val);
     }

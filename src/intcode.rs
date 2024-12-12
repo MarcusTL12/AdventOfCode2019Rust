@@ -73,6 +73,12 @@ impl IntcodeMachine {
         (Self::new(data, stdin, stdout), stdin_s, stdout_r)
     }
 
+    pub fn load_progam(&mut self, data: &[i64]) {
+        self.data.clear();
+        self.data.extend_from_slice(data);
+        self.pc = 0;
+    }
+
     fn fetch(&self) -> Instruction {
         let opdata = self[self.pc];
         let (opdata, opcode) = (opdata / 100, opdata % 100);
