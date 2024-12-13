@@ -9,6 +9,7 @@ use crossbeam::channel::{self, Receiver, Sender};
 pub struct IntcodeMachine {
     data: Vec<i64>,
     pc: usize,
+    rb: usize,
     stdin: Receiver<i64>,
     stdout: Sender<i64>,
 }
@@ -17,6 +18,7 @@ pub struct IntcodeMachine {
 enum Parameter {
     Address(usize),
     Immediate(i64),
+    Relative(isize),
 }
 
 impl Parameter {
@@ -24,6 +26,7 @@ impl Parameter {
         match flag {
             0 => Self::Address(data as usize),
             1 => Self::Immediate(data),
+            2 => Self::Relative(data as isize),
             _ => panic!("Illegal parameter flag: {flag}"),
         }
     }
@@ -39,6 +42,7 @@ enum Instruction {
     JumpFalse(Parameter, Parameter),
     IsLess(Parameter, Parameter, Parameter),
     IsEq(Parameter, Parameter, Parameter),
+    AdjustRB(Parameter),
     Halt,
 }
 
@@ -59,6 +63,7 @@ impl IntcodeMachine {
         Self {
             data,
             pc: 0,
+            rb: 0,
             stdin,
             stdout,
         }
@@ -77,6 +82,7 @@ impl IntcodeMachine {
         self.data.clear();
         self.data.extend_from_slice(data);
         self.pc = 0;
+        self.rb = 0;
     }
 
     fn fetch(&self) -> Instruction {
@@ -118,6 +124,9 @@ impl IntcodeMachine {
                 Parameter::new(flag2, self[self.pc + 2]),
                 Parameter::new(flag3, self[self.pc + 3]),
             ),
+            9 => {
+                Instruction::AdjustRB(Parameter::new(flag1, self[self.pc + 1]))
+            }
             _ => panic!("Illegal opcode: {opcode}"),
         }
     }
@@ -126,6 +135,9 @@ impl IntcodeMachine {
         match param {
             Parameter::Immediate(data) => data,
             Parameter::Address(index) => self[index],
+            Parameter::Relative(offset) => {
+                self[(self.rb as isize + offset) as usize]
+            }
         }
     }
 
@@ -135,6 +147,10 @@ impl IntcodeMachine {
                 panic!("Cannot write to immediate value!")
             }
             Parameter::Address(index) => self[index] = value,
+            Parameter::Relative(offset) => {
+                let index = (self.rb as isize + offset) as usize;
+                self[index] = value;
+            }
         }
     }
 
@@ -179,6 +195,11 @@ impl IntcodeMachine {
                 Instruction::IsEq(a, b, c) => {
                     self.set(c, if self.get(a) == self.get(b) { 1 } else { 0 });
                     self.pc += 4;
+                }
+                Instruction::AdjustRB(a) => {
+                    self.rb =
+                        (self.rb as isize + self.get(a) as isize) as usize;
+                    self.pc += 2;
                 }
             }
         }

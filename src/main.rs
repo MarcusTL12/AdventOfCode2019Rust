@@ -16,6 +16,7 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 
 enum TaskResult {
     Number(i64),
@@ -61,6 +62,7 @@ const DAYS: &[Day] = &[
     day6::PARTS,
     day7::PARTS,
     day8::PARTS,
+    day9::PARTS,
 ];
 
 fn load_input(day: usize, example: usize) -> String {
