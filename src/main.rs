@@ -1,4 +1,4 @@
-#![feature(iter_map_windows)]
+#![feature(iter_map_windows, slice_as_chunks)]
 
 use std::{env, fmt::Display, fs::read_to_string, time::Instant};
 
@@ -15,6 +15,7 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
 
 enum TaskResult {
     Number(i64),
@@ -59,6 +60,7 @@ const DAYS: &[Day] = &[
     day5::PARTS,
     day6::PARTS,
     day7::PARTS,
+    day8::PARTS,
 ];
 
 fn load_input(day: usize, example: usize) -> String {
